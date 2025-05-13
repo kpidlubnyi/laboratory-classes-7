@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 
 const { PORT } = require("./config");
+const { mongoConnect } = require('./database');
 const logger = require("./utils/logger");
 const productsRoutes = require("./routing/products");
 const logoutRoutes = require("./routing/logout");
@@ -44,4 +45,6 @@ app.use((request, response) => {
   logger.getErrorLog(url);
 });
 
-app.listen(PORT);
+mongoConnect(() => {
+  app.listen(PORT);
+});
